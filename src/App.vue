@@ -1,28 +1,46 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <v-app class="app blue-grey lighten-5">
+    <v-main>
+      <v-container>
+        <workingTime />
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import workingTime from "./components/workingTime";
 
 export default {
   name: "App",
+
   components: {
-    HelloWorld,
+    workingTime,
   },
+
+  data: () => ({
+    test: "test",
+  }),
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&display=swap");
+
+html,
+body {
+  font-family: "Nunito Sans", sans-serif;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-family: "Nunito Sans", sans-serif;
+
+  &.v-application {
+    background: #e5ecf0;
+  }
+}
+
+.app {
+  padding: 40px;
 }
 </style>
