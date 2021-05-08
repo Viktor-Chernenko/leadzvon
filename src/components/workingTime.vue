@@ -1,65 +1,22 @@
 <template>
   <v-row>
-    <v-col cols="3" class="working-time">
+    <v-col class="working-time">
       <h4 class="working-time__title">{{ title }}</h4>
-      <v-tabs v-model="tabActive" class="working-time__tabs">
+      <v-tabs
+        @change="updateSeriesList"
+        class="working-time__tabs"
+        v-model="tabActive"
+      >
         <v-tab class="text-capitalize" key="today">Сегодня</v-tab>
         <v-tab class="text-capitalize" key="week">Неделя</v-tab>
         <v-tab class="text-capitalize" key="month">Месяц</v-tab>
       </v-tabs>
-      <v-tabs-items v-model="tabActive">
-        <v-tab-item key="today" :transition="false">
-          <vc-donut
-            background="white"
-            foreground="grey"
-            :size="53"
-            unit="%"
-            :thickness="15"
-            has-legend
-            legend-placement="right"
-            :sections="workingTimeList.today"
-            :total="100"
-            :start-angle="0"
-            :auto-adjust-text-size="true"
-          >
-            <h5 class="font-weight-bold">{{ total }} %</h5>
-          </vc-donut>
-        </v-tab-item>
-        <v-tab-item key="week" :transition="false">
-          <vc-donut
-            background="white"
-            foreground="grey"
-            :size="53"
-            unit="%"
-            :thickness="15"
-            has-legend
-            legend-placement="right"
-            :sections="workingTimeList.week"
-            :total="100"
-            :start-angle="0"
-            :auto-adjust-text-size="true"
-          >
-            <h5 class="font-weight-bold">{{ total }} %</h5>
-          </vc-donut>
-        </v-tab-item>
-        <v-tab-item key="month" :transition="false">
-          <vc-donut
-            background="white"
-            foreground="grey"
-            :size="53"
-            unit="%"
-            :thickness="15"
-            has-legend
-            legend-placement="right"
-            :sections="workingTimeList.month"
-            :total="100"
-            :start-angle="0"
-            :auto-adjust-text-size="true"
-          >
-            <h5 class="font-weight-bold">{{ total }} %</h5>
-          </vc-donut>
-        </v-tab-item>
-      </v-tabs-items>
+      <apexchart
+        class="chart-donut"
+        type="donut"
+        :options="workingTimeList"
+        :series="workingTimeList.active"
+      ></apexchart>
     </v-col>
   </v-row>
 </template>
@@ -68,47 +25,105 @@ export default {
   name: "workingTime",
   data() {
     return {
+      tabActive: 0,
       title: "Время работы",
-      tabActive: "today",
       workingTimeList: {
-        today: [
-          { label: "Тотал в системе", value: 20, color: "#87DA8C" },
-          { label: "Поиск задачи", value: 20, color: "#8025FE" },
-          { label: "Гудки", value: 10, color: "#85C0D2" },
-          { label: "Разговоры", value: 10, color: "#30D032" },
-          { label: "Постобработка", value: 20, color: "#FF0668" },
-          { label: "Перерыв", value: 10, color: "#F2C94C" },
-          { label: "Обучение", value: 10, color: "#2278CE" },
+        active: [200, 60, 10, 13, 33, 10, 62],
+        today: [200, 24, 10, 13, 33, 10, 62],
+        week: [20, 42, 21, 87, 64, 10, 8],
+        month: [20, 20, 10, 6, 10, 10, 10],
+
+        labels: [
+          "Тотал в системе",
+          "Поиск задачи",
+          "Гудки",
+          "Разговоры",
+          "Постобработка",
+          "Перерыв",
+          "Обучение",
         ],
-        week: [
-          { label: "Тотал в системе", value: 40, color: "#87DA8C" },
-          { label: "Поиск задачи", value: 10, color: "#8025FE" },
-          { label: "Гудки", value: 10, color: "#85C0D2" },
-          { label: "Разговоры", value: 10, color: "#30D032" },
-          { label: "Постобработка", value: 10, color: "#FF0668" },
-          { label: "Перерыв", value: 10, color: "#F2C94C" },
-          { label: "Обучение", value: 10, color: "#2278CE" },
+
+        colors: [
+          "#87DA8C",
+          "#8025FE",
+          "#85C0D2",
+          "#30D032",
+          "#FF0668",
+          "#F2C94C",
+          "#2278CE",
         ],
-        month: [
-          { label: "Тотал в системе", value: 10, color: "#87DA8C" },
-          { label: "Поиск задачи", value: 10, color: "#8025FE" },
-          { label: "Гудки", value: 10, color: "#85C0D2" },
-          { label: "Разговоры", value: 10, color: "#30D032" },
-          { label: "Постобработка", value: 10, color: "#FF0668" },
-          { label: "Перерыв", value: 20, color: "#F2C94C" },
-          { label: "Обучение", value: 30, color: "#2278CE" },
-        ],
+        stroke: {
+          lineCap: "round",
+        },
+
+        plotOptions: {
+          pie: {
+            offsetX: 5,
+            offsetY: 40,
+            customScale: 1.5,
+            donut: {
+              size: "83%",
+              background: "transparent",
+              labels: {
+                show: true,
+                name: {
+                  show: false,
+                  color: "#617E8D",
+                  fontSize: "20 px",
+                },
+                value: {
+                  color: "#617E8D",
+                  fontSize: "20 px",
+                  formatter: function (val) {
+                    if (val > 59) {
+                      const min = val % 60;
+                      const hour = Math.floor(val / 60);
+                      if (min) {
+                        return `${hour} час. ${min} мин.`;
+                      }
+                      return `${hour} час.`;
+                    }
+
+                    return `${val} мин.`;
+                  },
+                },
+                total: {
+                  showAlways: true,
+                  fontSize: "20 px",
+                  show: true,
+                  label: "",
+                  formatter: function (w) {
+                    const val = w.globals.seriesTotals.reduce((a, b) => {
+                      return a + b;
+                    }, 0);
+
+                    if (val > 59) {
+                      const min = val % 60;
+                      const hour = Math.floor(val / 60);
+                      return `${hour} час. ${min} мин.`;
+                    }
+
+                    return `${val} мин.`;
+                  },
+                },
+              },
+            },
+          },
+        },
+
+        dataLabels: {
+          enabled: false,
+        },
       },
     };
   },
-  computed: {
-    total() {
-      const total = this.workingTimeList.today.reduce((acc, item) => {
-        acc += item.value;
-        return acc;
-      }, 0);
-
-      return total;
+  methods: {
+    updateSeriesList() {
+      let activeTab;
+      if (this.tabActive === 0) activeTab = "today";
+      if (this.tabActive === 1) activeTab = "week";
+      if (this.tabActive === 2) activeTab = "month";
+      this.workingTimeList.active = this.workingTimeList[activeTab];
     },
   },
 };
@@ -119,10 +134,11 @@ export default {
   border: 1px dashed #a3b9c4;
   border-radius: 24px;
   padding: 19px 26px !important;
+  max-width: 425px !important;
+  width: 100% !important;
 
-  h5 {
-    color: #617e8d;
-    font-size: 20px;
+  .apexcharts-svg {
+    overflow: visible !important;
   }
 
   &__title {
@@ -131,17 +147,25 @@ export default {
     margin-bottom: 10px;
   }
 
-  &__tabs {
-    margin-bottom: 45px;
+  // tabs
 
-    .v-tabs-bar {
+  .v-tabs {
+    &-bar {
       background: rgba(167, 195, 208, 0.45) !important;
       border-radius: 20px;
+      height: auto;
+      padding: 3px 0;
     }
-  }
 
-  .v-tabs-items {
-    background: transparent !important;
+    &-items {
+      background: transparent !important;
+      padding-top: 35px;
+      overflow: visible !important;
+    }
+
+    &-slider {
+      display: none !important;
+    }
   }
 
   .cdc-overlay {
@@ -154,6 +178,7 @@ export default {
 
   .v-tab {
     flex-grow: 1;
+    padding: 6px 16px;
     margin: 5px;
     border-radius: 20px;
     transition: 0.2s linear;
@@ -168,14 +193,11 @@ export default {
     }
   }
 
-  .v-tabs-slider {
-    display: none !important;
-  }
-
-  .v-tab--active {
+  .v-tabs .v-tab--active {
     background: #ffffff;
     box-shadow: 0px 4px 4px rgba(221, 227, 231, 0.5);
     animation: none;
+    color: #7a9cad;
 
     &:hover {
       background: #ffffff;
@@ -183,24 +205,29 @@ export default {
   }
 }
 
-.cdc-legend-item {
-  margin: 0 !important;
-  line-height: 25px;
+// charts
 
-  span {
-    font-size: 14px;
-    color: #000;
-  }
-
-  &-color {
-    width: 14px !important;
-    height: 14px !important;
-    border-radius: 100% !important;
-    margin-right: 20px !important;
-  }
+.chart-donut {
+  padding-top: 35px;
 }
 
-.cdc-legend {
-  margin-left: 15px !important;
+.apexcharts-legend {
+  right: -10px !important;
+
+  &-marker {
+    width: 14px !important;
+    height: 14px !important;
+    margin-right: 20px !important;
+  }
+
+  &-series {
+    display: flex;
+    align-items: center;
+    margin-bottom: 7px !important;
+  }
+
+  &-text {
+    font-size: 14px !important;
+  }
 }
 </style>
