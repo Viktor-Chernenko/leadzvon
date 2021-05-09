@@ -15,7 +15,7 @@
         class="chart-donut"
         type="donut"
         :options="workingTimeList"
-        :series="workingTimeList.active"
+        :series="workingTimeList.value.active"
       ></apexchart>
     </v-col>
   </v-row>
@@ -28,11 +28,12 @@ export default {
       tabActive: 0,
       title: "Время работы",
       workingTimeList: {
-        active: [200, 60, 10, 13, 33, 10, 62],
-        today: [200, 24, 10, 13, 33, 10, 62],
-        week: [20, 42, 21, 87, 64, 10, 8],
-        month: [20, 20, 10, 6, 10, 10, 10],
-
+        value: {
+          active: [200, 60, 10, 13, 33, 10, 62],
+          today: [200, 24, 10, 13, 33, 10, 62],
+          week: [20, 42, 21, 87, 64, 10, 8],
+          month: [20, 20, 10, 6, 10, 10, 10],
+        },
         labels: [
           "Тотал в системе",
           "Поиск задачи",
@@ -42,7 +43,6 @@ export default {
           "Перерыв",
           "Обучение",
         ],
-
         colors: [
           "#87DA8C",
           "#8025FE",
@@ -123,7 +123,7 @@ export default {
       if (this.tabActive === 0) activeTab = "today";
       if (this.tabActive === 1) activeTab = "week";
       if (this.tabActive === 2) activeTab = "month";
-      this.workingTimeList.active = this.workingTimeList[activeTab];
+      this.workingTimeList.value.active = this.workingTimeList.value[activeTab];
     },
   },
 };
