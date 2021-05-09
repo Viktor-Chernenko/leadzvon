@@ -1,18 +1,26 @@
 <template>
   <v-row>
-    <v-col class="working-time">
-      <h4 class="working-time__title">{{ title }}</h4>
+    <v-col class="working-time pt-5 px-6 pb-10 rounded-xl">
+      <h6
+        class="text-h6 blue-grey--text text--lighten-1 font-weight-regular mb-2"
+      >
+        {{ title }}
+      </h6>
       <v-tabs
         @change="updateSeriesList"
-        class="working-time__tabs"
+        :grow="true"
+        class="working-time__tabs blue-grey lighten-4 rounded-xl"
         v-model="tabActive"
       >
-        <v-tab class="text-capitalize" key="today">Сегодня</v-tab>
-        <v-tab class="text-capitalize" key="week">Неделя</v-tab>
-        <v-tab class="text-capitalize" key="month">Месяц</v-tab>
+        <v-tab
+          v-for="(value, key) in tabsArr"
+          class="text-capitalize subtitle-2 blue-grey--text text--lighten-1 flex-grow-1 rounded-xl ma-1 py-1 font-weight-regular"
+          :key="key"
+          >{{ value }}</v-tab
+        >
       </v-tabs>
       <apexchart
-        class="chart-donut"
+        class="chart-donut pt-9"
         type="donut"
         :options="workingTimeList"
         :series="workingTimeList.value.active"
@@ -26,6 +34,11 @@ export default {
   data() {
     return {
       tabActive: 0,
+      tabsArr: {
+        today: "Сегодня",
+        week: "Неделя",
+        month: "Месяц",
+      },
       title: "Время работы",
       workingTimeList: {
         value: {
@@ -133,16 +146,8 @@ export default {
 <style lang="scss">
 .working-time {
   border: 1px dashed #a3b9c4;
-  border-radius: 24px;
-  padding: 19px 26px 40px !important;
   max-width: 425px !important;
   width: 100% !important;
-
-  &__title {
-    font-size: 20px;
-    color: #617e8d;
-    margin-bottom: 10px;
-  }
 
   // ==charts==
   .apexcharts-svg {
@@ -150,7 +155,6 @@ export default {
   }
 
   .chart-donut {
-    padding-top: 35px;
     height: 256px !important;
     max-height: 100% !important;
     min-height: auto !important;
@@ -182,36 +186,28 @@ export default {
 
   .v-tabs {
     &-bar {
-      background: rgba(167, 195, 208, 0.45) !important;
-      border-radius: 20px;
-      height: auto;
-      padding: 3px 0;
-    }
-
-    &-items {
       background: transparent !important;
-      padding-top: 35px;
-      overflow: visible !important;
+      height: auto !important;
+      padding: 2px !important;
     }
 
     &-slider {
       display: none !important;
     }
-  }
 
-  .cdc-overlay {
-    background: #e5ecf0 !important;
-  }
+    .v-tab--active {
+      background: #ffffff;
+      box-shadow: 0px 4px 4px rgba(221, 227, 231, 0.5);
+      animation: none;
+      color: #7a9cad;
 
-  .v-slide-group__content {
-    width: 100%;
+      &:hover {
+        background: #ffffff;
+      }
+    }
   }
 
   .v-tab {
-    flex-grow: 1;
-    padding: 6px 16px;
-    margin: 5px;
-    border-radius: 20px;
     transition: 0.2s linear;
     animation: none;
 
@@ -224,16 +220,6 @@ export default {
     }
   }
 
-  .v-tabs .v-tab--active {
-    background: #ffffff;
-    box-shadow: 0px 4px 4px rgba(221, 227, 231, 0.5);
-    animation: none;
-    color: #7a9cad;
-
-    &:hover {
-      background: #ffffff;
-    }
-  }
   // ==/tabs==
 }
 </style>

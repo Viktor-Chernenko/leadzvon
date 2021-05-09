@@ -1,5 +1,5 @@
 <template>
-  <v-app class="app blue-grey lighten-5">
+  <v-app class="app">
     <v-main>
       <v-container>
         <workingTime />
