@@ -53,11 +53,12 @@ export default {
           "#2278CE",
         ],
         stroke: {
-          lineCap: "round",
+          show: false,
         },
 
         plotOptions: {
           pie: {
+            expandOnClick: false,
             offsetX: 5,
             offsetY: 40,
             customScale: 1.5,
@@ -68,8 +69,8 @@ export default {
                 show: true,
                 name: {
                   show: false,
-                  color: "#617E8D",
-                  fontSize: "20 px",
+                  // color: "#617E8D",
+                  // fontSize: "20 px",
                 },
                 value: {
                   color: "#617E8D",
@@ -133,13 +134,9 @@ export default {
 .working-time {
   border: 1px dashed #a3b9c4;
   border-radius: 24px;
-  padding: 19px 26px !important;
+  padding: 19px 26px 40px !important;
   max-width: 425px !important;
   width: 100% !important;
-
-  .apexcharts-svg {
-    overflow: visible !important;
-  }
 
   &__title {
     font-size: 20px;
@@ -147,7 +144,41 @@ export default {
     margin-bottom: 10px;
   }
 
-  // tabs
+  // ==charts==
+  .apexcharts-svg {
+    overflow: visible !important;
+  }
+
+  .chart-donut {
+    padding-top: 35px;
+    height: 256px !important;
+    max-height: 100% !important;
+    min-height: auto !important;
+  }
+
+  .apexcharts-legend {
+    right: -10px !important;
+    bottom: auto !important;
+
+    &-marker {
+      width: 14px !important;
+      height: 14px !important;
+      margin-right: 20px !important;
+    }
+
+    &-series {
+      display: flex;
+      align-items: center;
+      margin-bottom: 7px !important;
+    }
+
+    &-text {
+      font-size: 14px !important;
+    }
+  }
+  // ==/charts==
+
+  // ==tabs==
 
   .v-tabs {
     &-bar {
@@ -203,31 +234,6 @@ export default {
       background: #ffffff;
     }
   }
-}
-
-// charts
-
-.chart-donut {
-  padding-top: 35px;
-}
-
-.apexcharts-legend {
-  right: -10px !important;
-
-  &-marker {
-    width: 14px !important;
-    height: 14px !important;
-    margin-right: 20px !important;
-  }
-
-  &-series {
-    display: flex;
-    align-items: center;
-    margin-bottom: 7px !important;
-  }
-
-  &-text {
-    font-size: 14px !important;
-  }
+  // ==/tabs==
 }
 </style>
