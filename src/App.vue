@@ -2,7 +2,10 @@
   <v-app class="app">
     <v-main>
       <v-container>
-        <workingTime />
+        <v-row class="justify-space-around">
+          <workingTime />
+          <workingTime :strokeShow="true" :strokeWidth="5" donutSize="78%" />
+        </v-row>
       </v-container>
     </v-main>
   </v-app>
