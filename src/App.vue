@@ -11,7 +11,7 @@
             >
               <workingTime
                 :strokeShow="true"
-                :strokeWidth="5"
+                :strokeWidth="4"
                 donutSize="78%"
                 :pieCustomScale="1.65"
               />
