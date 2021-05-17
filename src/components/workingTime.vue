@@ -1,34 +1,33 @@
 <template>
-  <v-col class="working-time pt-5 px-6 pb-10 rounded-xl">
+  <div class="working-time">
     <h6
       class="text-h6 blue-grey--text text--lighten-1 font-weight-regular mb-2"
     >
       {{ title }}
     </h6>
-    <v-tabs
-      @change="updateSeriesList"
-      :grow="true"
-      class="working-time__tabs blue-grey lighten-4 rounded-xl"
-      v-model="tabActive"
-    >
-      <v-tab
-        v-for="(value, key) in tabsArr"
-        class="text-capitalize subtitle-2 blue-grey--text text--lighten-1 flex-grow-1 rounded-xl ma-1 py-1 font-weight-regular"
-        :key="key"
-        >{{ value }}</v-tab
-      >
-    </v-tabs>
+    <appTabs
+      :changeMethod="updateSeriesList"
+      :ObjTitle="tabsArr"
+      @tabChange="tabActiveChange"
+      :classVTab="['text-2', 'color-6']"
+      colorTabActive="var(--color-6)"
+    ></appTabs>
     <apexchart
       class="chart-donut pt-9"
       type="donut"
       :options="workingTimeList"
       :series="workingTimeList.value.active"
     ></apexchart>
-  </v-col>
+  </div>
 </template>
 <script>
+import appTabs from "./app-pattern/app-tabs";
+
 export default {
   name: "workingTime",
+  components: {
+    appTabs,
+  },
   props: {
     strokeShow: {
       type: [String, Boolean],
@@ -40,7 +39,7 @@ export default {
     },
     strokeColors: {
       type: String,
-      default: "#e5ecf0",
+      default: "var(--color-5)",
     },
     donutSize: {
       type: String,
@@ -58,6 +57,7 @@ export default {
         today: "Сегодня",
         week: "Неделя",
         month: "Месяц",
+        selectDate: "Выбрать период",
       },
 
       title: "Время работы",
@@ -67,9 +67,10 @@ export default {
           today: [200, 224, 10, 13, 33, 10, 62],
           week: [20, 42, 21, 87, 64, 10, 8],
           month: [20, 20, 10, 6, 10, 10, 10],
+          period: [40, 20, 10, 6, 10, 10, 10],
         },
         labels: [
-          "Тотал в системе",
+          "Время в кабинете",
           "Поиск задачи",
           "Гудки",
           "Разговоры",
@@ -78,7 +79,7 @@ export default {
           "Обучение",
         ],
         colors: [
-          "#87DA8C",
+          "#00BCD4",
           "#8025FE",
           "#85C0D2",
           "#30D032",
@@ -114,9 +115,9 @@ export default {
                 const min = val % 60;
                 const hour = Math.floor(val / 60);
                 if (min) {
-                  return `${hour} час. ${min} мин.`;
+                  return `${hour} ч. ${min} мин.`;
                 }
-                return `${hour} час.`;
+                return `${hour} ч.`;
               }
 
               return `${val} мин.`;
@@ -148,9 +149,9 @@ export default {
                       const min = val % 60;
                       const hour = Math.floor(val / 60);
                       if (min) {
-                        return `${hour} час. ${min} мин.`;
+                        return `${hour} ч. ${min} мин.`;
                       }
-                      return `${hour} час.`;
+                      return `${hour} ч.`;
                     }
 
                     return `${val} мин.`;
@@ -169,7 +170,7 @@ export default {
                     if (val > 59) {
                       const min = val % 60;
                       const hour = Math.floor(val / 60);
-                      return `${hour} час. ${min} мин.`;
+                      return `${hour} ч. ${min} мин.`;
                     }
 
                     return `${val} мин.`;
@@ -181,112 +182,31 @@ export default {
         },
 
         dataLabels: {
-          enabled: false,
+          enabled: true,
+          style: {
+            fontSize: "10px",
+            fontWeight: "bold",
+          },
         },
       },
     };
   },
   methods: {
     updateSeriesList() {
+      console.log(this.tabActive);
       let activeTab;
       if (this.tabActive === 0) activeTab = "today";
       if (this.tabActive === 1) activeTab = "week";
       if (this.tabActive === 2) activeTab = "month";
+      if (this.tabActive === 3) activeTab = "period";
+
       this.workingTimeList.value.active = this.workingTimeList.value[activeTab];
+    },
+
+    tabActiveChange(value) {
+      this.tabActive = value;
+      this.updateSeriesList();
     },
   },
 };
 </script>
-
-<style lang="scss">
-.working-time {
-  border: 1px dashed #a3b9c4;
-  max-width: 425px !important;
-  width: 100% !important;
-
-  // ==charts==
-  .apexcharts-svg {
-    overflow: visible !important;
-  }
-
-  .apexcharts-datalabels-group {
-    position: absolute !important;
-    top: 50% !important;
-    transform: none !important;
-  }
-
-  .apexcharts-series {
-    path {
-      filter: none !important;
-    }
-  }
-
-  .chart-donut {
-    height: 256px !important;
-    max-height: 100% !important;
-    min-height: auto !important;
-  }
-
-  .apexcharts-legend {
-    right: -10px !important;
-    bottom: auto !important;
-
-    &-marker {
-      width: 14px !important;
-      height: 14px !important;
-      margin-right: 20px !important;
-    }
-
-    &-series {
-      display: flex;
-      align-items: center;
-      margin-bottom: 7px !important;
-    }
-
-    &-text {
-      font-size: 14px !important;
-    }
-  }
-  // ==/charts==
-
-  // ==tabs==
-
-  .v-tabs {
-    &-bar {
-      background: transparent !important;
-      height: auto !important;
-      padding: 2px !important;
-    }
-
-    &-slider {
-      display: none !important;
-    }
-
-    .v-tab--active {
-      background: #ffffff;
-      box-shadow: 0px 4px 4px rgba(221, 227, 231, 0.5);
-      animation: none;
-      color: #7a9cad;
-
-      &:hover {
-        background: #ffffff;
-      }
-    }
-  }
-
-  .v-tab {
-    transition: 0.2s linear;
-    animation: none;
-
-    &::before {
-      display: none;
-    }
-
-    &:hover {
-      background: rgb(255, 255, 255, 0.4);
-    }
-  }
-
-  // ==/tabs==
-}
-</style>

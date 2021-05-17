@@ -26,22 +26,21 @@ title - заголовок карточки (значение String)
 
 
 === background ===
-backgroundCard - фон всего компонента (значение классом Vuetify)
-backgroundTabs - фон для элемента v-tabs (значение классом Vuetify)
-backgroundAvatar - фон для элемента operator-rating-list__icon-box, который появляется если у объекта нет аватарки (значение классом Vuetify)
+backgroundTabs - фон для элемента v-tabs
+backgroundAvatar - фон для элемента operator-rating-list__icon-box, который появляется если у объекта нет аватарки
 === /background ===
 
 
 === border ===
-borderListItem = цвет для border-bottom у элемента v-list-item (значение HEX, RGB, RGBA, HSLA)
+borderListItem = цвет для border-bottom у элемента v-list-item
 === border ===
 
 
 === color text ===
-BaseColor - основной цвета для заголовка компонента, нумерации, имени и фамилии оператора (значение классом Vuetify)
-colorTabActive - цвет для активного элемента v-tab (значение HEX, RGB, RGBA, HSLA)
-colorAvatarText - цвет для аватарки, которая появляется если у объекта нет аватарки (значение классом Vuetify)
-ValueRatingColor - цвет значения в рейтинга оператора (значение классом Vuetify)
+BaseColor - основной цвета для заголовка компонента, нумерации, имени и фамилии оператора
+colorTabActive - цвет для активного элемента v-tab
+colorAvatarText - цвет для аватарки, которая появляется если у объекта нет аватарки
+ValueRatingColor - цвет значения в рейтинга оператора
 === /color text ===
 
 
@@ -50,7 +49,6 @@ ValueRatingColor - цвет значения в рейтинга операто�
 <operatorRating
   title=""
   
-  backgroundCard=""
   backgroundTabs=""
   backgroundAvatar=""
 
@@ -65,18 +63,31 @@ ValueRatingColor - цвет значения в рейтинга операто�
 --->
 
 <template>
-  <v-col
-    class="operator-rating rounded-xl"
-    :class="[backgroundCard]"
-    :style="cssProps"
-  >
+  <div class="operator-rating rounded-xl" :style="cssProps">
     <h6
-      class="text-subtitle-1 font-weight-regular mb-2 mt-4 mx-4 operator-rating__title"
+      class="text-subtitle-1 font-weight-regular mb-2 mx-4 operator-rating__title"
       :class="BaseColor"
     >
       {{ title }}
     </h6>
-    <v-tabs
+
+    <appTabs
+      :ObjTitle="tabs"
+      :background="backgroundTabs"
+      :colorTabActive="colorTabActive"
+      :classVTabs="['rounded-xl', 'align-center', 'mb-3']"
+      :classVTab="[
+        'rounded-xl',
+        'color-white',
+        'text-1',
+        'font-weight-medium',
+        'text-capitalize',
+        'ma-1',
+        'flex-grow-1',
+      ]"
+    />
+
+    <!-- <v-tabs
       class="rounded-xl align-center mb-3"
       :class="[backgroundTabs]"
       active-class="tab-item_active"
@@ -91,7 +102,7 @@ ValueRatingColor - цвет значения в рейтинга операто�
         class="rounded-xl white--text text-body-2 font-weight-medium text-capitalize ma-1 flex-grow-1"
         >{{ value }}</v-tab
       >
-    </v-tabs>
+    </v-tabs> -->
     <v-list one-line color="transparent" class="operator-rating-list pa-0">
       <template v-for="user in users">
         <v-list-item :key="user.id" class="operator-rating-list__item">
@@ -144,12 +155,17 @@ ValueRatingColor - цвет значения в рейтинга операто�
         </v-list-item>
       </template>
     </v-list>
-  </v-col>
+  </div>
 </template>
 
 <script>
+import appTabs from "./app-pattern/app-tabs";
+
 export default {
   name: "operatorRating",
+  components: {
+    appTabs,
+  },
   data: () => ({
     tabs: {
       el_1: "Прошлый",
@@ -191,10 +207,6 @@ export default {
     },
 
     // background
-    backgroundCard: {
-      type: String,
-      default: "teal lighten-3",
-    },
     backgroundTabs: {
       type: String,
       default: "teal lighten-2",
@@ -229,9 +241,6 @@ export default {
   --color-tab-active: #70ae9d;
   --color-list-item-border: rgba(31, 120, 96, 0.4);
   // ===/ vars ===
-
-  max-width: 385px !important;
-  width: 100% !important;
 
   &__title {
     letter-spacing: 0.07rem !important;

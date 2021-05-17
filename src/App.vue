@@ -2,24 +2,57 @@
   <v-app class="app">
     <v-main>
       <v-container>
-        <v-row class="justify-space-around">
-          <workingTime />
-          <workingTime :strokeShow="true" :strokeWidth="5" donutSize="78%" />
-        </v-row>
-        <v-row class="justify-space-around my-10">
-          <operatorRating :users="usersTest1" />
-          <operatorRating
-            :users="usersTest2"
-            title="Топ операторов по % выкупа"
-            backgroundCard="brown lighten-4"
-            backgroundTabs="brown lighten-3"
-            backgroundAvatar="grey lighten-5"
-            borderListItem="rgba(152, 128, 96, 0.4)"
-            BaseColor="brown--text text--darken-1"
-            colorTabActive="#8a7b67"
-            colorAvatarText="brown--text text--lighten-3"
-            ValueRatingColor="purple--text text--accent-3"
-          />
+        <v-row class="justify-space-around align-stretch">
+          <v-col cols="3">
+            <app-card
+              border="1px dashed #a3b9c4"
+              padding="19px 26px"
+              height="100%"
+            >
+              <workingTime
+                :strokeShow="true"
+                :strokeWidth="5"
+                donutSize="78%"
+                :pieCustomScale="1.65"
+              />
+            </app-card>
+          </v-col>
+          <v-col cols="3">
+            <app-card padding="19px 12px" background="var(--color-2)">
+              <operatorRating :users="usersTest1" />
+            </app-card>
+          </v-col>
+          <v-col cols="3">
+            <app-card padding="19px 12px" background="var(--color-3)">
+              <operatorRating
+                :users="usersTest2"
+                title="Топ операторов по % выкупа"
+                backgroundTabs="brown lighten-3"
+                backgroundAvatar="grey lighten-5"
+                borderListItem="rgba(152, 128, 96, 0.4)"
+                BaseColor="brown--text text--darken-1"
+                colorTabActive="#8a7b67"
+                colorAvatarText="brown--text text--lighten-3"
+                ValueRatingColor="purple--text text--accent-3"
+              />
+            </app-card>
+          </v-col>
+
+          <v-col cols="3">
+            <app-card padding="19px 12px" background="var(--color-4)">
+              <operatorRating
+                :users="usersTest2"
+                title="Топ операторов по % выкупа"
+                backgroundTabs="brown lighten-3"
+                backgroundAvatar="grey lighten-5"
+                borderListItem="rgba(152, 128, 96, 0.4)"
+                BaseColor="brown--text text--darken-1"
+                colorTabActive="#8a7b67"
+                colorAvatarText="brown--text text--lighten-3"
+                ValueRatingColor="purple--text text--accent-3"
+              />
+            </app-card>
+          </v-col>
         </v-row>
       </v-container>
     </v-main>
@@ -29,6 +62,7 @@
 <script>
 import workingTime from "./components/workingTime";
 import operatorRating from "./components/operatorRating";
+import appCard from "./components/app-pattern/app-card.vue";
 
 export default {
   name: "App",
@@ -36,6 +70,7 @@ export default {
   components: {
     workingTime,
     operatorRating,
+    appCard,
   },
 
   data: () => ({
@@ -111,20 +146,16 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&display=swap");
-
+<style lang="css">
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap");
 html,
-body {
-  font-family: "Nunito Sans", sans-serif;
+body,
+* {
+  font-family: "Nunito Sans", sans-serif !important;
 }
 
-#app {
-  font-family: "Nunito Sans", sans-serif;
-
-  &.v-application {
-    background: #e5ecf0;
-  }
+#app.v-application {
+  background: #e5ecf0;
 }
 
 .app {
