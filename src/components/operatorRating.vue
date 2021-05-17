@@ -19,12 +19,6 @@ users: {
 },
 === /Object ===
 
-
-=== text ===
-title - заголовок карточки (значение String)
-=== /text ===
-
-
 === background ===
 backgroundTabs - фон для элемента v-tabs
 backgroundAvatar - фон для элемента operator-rating-list__icon-box, который появляется если у объекта нет аватарки
@@ -47,8 +41,6 @@ ValueRatingColor - цвет значения в рейтинга операто�
 === ШАБЛОН ===
 
 <operatorRating
-  title=""
-  
   backgroundTabs=""
   backgroundAvatar=""
 
@@ -68,14 +60,14 @@ ValueRatingColor - цвет значения в рейтинга операто�
       class="text-subtitle-1 font-weight-regular mb-2 mx-4 operator-rating__title"
       :class="BaseColor"
     >
-      {{ title }}
+      <slot name="title"></slot>
     </h6>
 
     <appTabs
       :ObjTitle="tabs"
       :background="backgroundTabs"
       :colorTabActive="colorTabActive"
-      :classVTabs="['rounded-xl', 'align-center', 'mb-3']"
+      class="rounded-xl align-center mb-3 red"
       :classVTab="[
         'rounded-xl',
         'color-white',
@@ -86,23 +78,6 @@ ValueRatingColor - цвет значения в рейтинга операто�
         'flex-grow-1',
       ]"
     />
-
-    <!-- <v-tabs
-      class="rounded-xl align-center mb-3"
-      :class="[backgroundTabs]"
-      active-class="tab-item_active"
-      slider-color="transparent"
-      :height="41"
-      :centered="true"
-    >
-      <v-tab
-        v-for="(value, key) in tabs"
-        :height="20"
-        :key="key"
-        class="rounded-xl white--text text-body-2 font-weight-medium text-capitalize ma-1 flex-grow-1"
-        >{{ value }}</v-tab
-      >
-    </v-tabs> -->
     <v-list one-line color="transparent" class="operator-rating-list pa-0">
       <template v-for="user in users">
         <v-list-item :key="user.id" class="operator-rating-list__item">
@@ -227,7 +202,6 @@ export default {
   computed: {
     cssProps() {
       return {
-        "--color-tab-active": this.colorTabActive,
         "--color-list-item-border": this.borderListItem,
       };
     },
@@ -235,49 +209,18 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .operator-rating {
   //=== vars ===
-  --color-tab-active: #70ae9d;
   --color-list-item-border: rgba(31, 120, 96, 0.4);
   // ===/ vars ===
-
-  &__title {
-    letter-spacing: 0.07rem !important;
-  }
-
-  // === tabs ===
-  .v-tabs-bar {
-    background-color: transparent !important;
-  }
-
-  .tab-item_active {
-    background: #fff;
-    color: var(--color-tab-active) !important;
-  }
-  // === /tabs ===
 
   // === list ===
   &-list {
     &__item {
-      padding: 9px 0 !important;
-
       &:not(:last-child) {
-        border-bottom: 1px solid var(--color-list-item-border);
+        border-bottom: 1px solid var(--color-list-item-border) !important;
       }
-    }
-
-    &__avatar {
-      border-radius: 15px !important;
-    }
-
-    &__number {
-      width: 39px;
-    }
-
-    &__icon-box {
-      width: 22px !important;
-      height: 20px !important;
     }
   }
   // === /list ===

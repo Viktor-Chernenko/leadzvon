@@ -10,7 +10,6 @@ heightVTab: высота элементов v-tab (Number)
 ObjTitle: объект с заголовками v-tab (Object)
   Пример: { tab1: "tab-1", tab2: "tab-2", tab3: "tab-3" }
 
-classVTabs: массив с классами для v-tabs (Array)
 classVTab: массив с классами для v-tab (Array)
 
 ====== METHODS =====
@@ -25,11 +24,10 @@ tabActiveChange = метод передаёт индекс активного v-
   heightVTabs=""
   heightVTab=""
   ObjTitle=""
-  classVTabs=""
   classVTab=""
   activeClass=""
   @tabChange="tabActiveChange"
-></appTabs>
+></appTabs> 
 
 --->
 
@@ -38,10 +36,8 @@ tabActiveChange = метод передаёт индекс активного v-
     @change="tabActiveChange"
     v-model="tabActive"
     :hide-slider="true"
-    :show-arrows="false"
     :grow="true"
     class="rounded-xl"
-    :class="classVTabs"
     :height="heightVTabs"
     :background-color="background"
   >
@@ -50,7 +46,7 @@ tabActiveChange = метод передаёт индекс активного v-
       v-for="(value, key) in ObjTitle"
       :class="classVTab"
       active-class="tab-active"
-      class="text-capitalize flex-shrink-1 rounded-xl my-1 py-1 px-1 font-weight-regular"
+      class="text-capitalize flex-shrink-1 rounded-xl ma-1 py-1 px-1 font-weight-regular tab-elem"
       :key="key"
       :height="heightVTab"
       >{{ value }}</v-tab
@@ -90,10 +86,6 @@ export default {
       type: Object,
       default: () => ({ tab1: "tab-1", tab2: "tab-2", tab3: "tab-3" }),
     },
-    classVTabs: {
-      type: Array,
-      default: () => [],
-    },
     classVTab: {
       type: Array,
       default: () => [],
@@ -123,5 +115,9 @@ export default {
 
   color: var(--color-active-tab) !important;
   background: var(--background-active-tab) !important;
+}
+
+.tab-elem {
+  min-width: 0 !important;
 }
 </style>

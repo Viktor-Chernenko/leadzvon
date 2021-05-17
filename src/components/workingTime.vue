@@ -193,12 +193,23 @@ export default {
   },
   methods: {
     updateSeriesList() {
-      console.log(this.tabActive);
       let activeTab;
-      if (this.tabActive === 0) activeTab = "today";
-      if (this.tabActive === 1) activeTab = "week";
-      if (this.tabActive === 2) activeTab = "month";
-      if (this.tabActive === 3) activeTab = "period";
+      switch (this.tabActive) {
+        case 0:
+          activeTab = "today";
+          break;
+        case 1:
+          activeTab = "week";
+          break;
+        case 2:
+          activeTab = "month";
+          break;
+        case 3:
+          activeTab = "period";
+          break;
+        default:
+          activeTab = "today";
+      }
 
       this.workingTimeList.value.active = this.workingTimeList.value[activeTab];
     },

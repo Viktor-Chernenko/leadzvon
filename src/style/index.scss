@@ -1,4 +1,3 @@
-<style lang="scss">
 // === vars ===
 :root {
   // color
@@ -8,6 +7,16 @@
   --color-4: #eedcdc;
   --color-5: #e5ecf0;
   --color-6: #7a9cad;
+  --color-8: #DFFF1D;
+  --color-9: #8E7654;
+  --color-10: #D9C6AC;
+  --color-11: #CA4F8E;
+  --color-12: #9E4B4B;
+  --color-13: #BEA98B;
+  --color-14: #C08A8A;
+  --color-15: #4CAF50;
+
+
 
   --color-white: #fff;
   --color-black: #000;
@@ -15,6 +24,7 @@
   // font-size
   --text-1: 14px;
   --text-2: 12px;
+  --text-3: 20px;
 }
 // === /vars ===
 
@@ -28,6 +38,10 @@
 
 .text-2 {
   font-size: var(--text-2) !important;
+}
+
+.text-3 {
+  font-size: var(--text-3) !important;
 }
 // == / text ==
 
@@ -62,6 +76,38 @@
 
 .color-6 {
   color: var(--color-6) !important;
+}
+
+.color-7 {
+  color: var(--color-7) !important;
+}
+
+.color-8 {
+  color: var(--color-8) !important;
+}
+
+.color-9 {
+  color: var(--color-9) !important;
+}
+
+.color-10 {
+  color: var(--color-10) !important;
+}
+
+.color-11 {
+  color: var(--color-11) !important;
+}
+
+.color-12 {
+  color: var(--color-12) !important;
+}
+
+.color-13 {
+  color: var(--color-13) !important;
+}
+
+.color-14 {
+  color: var(--color-14) !important;
 }
 // == /color ==
 
@@ -118,4 +164,32 @@
   // ==/charts==
 }
 // === /working-time ===
-</style>
+
+// === /operator-rating ===
+.operator-rating {
+  &__title {
+    letter-spacing: 0.07rem !important;
+  }
+
+  // === list ===
+  &-list {
+    &__item {
+      padding: 9px 0 !important;
+    }
+
+    &__avatar {
+      border-radius: 15px !important;
+    }
+
+    &__number {
+      width: 39px;
+    }
+
+    &__icon-box {
+      width: 22px !important;
+      height: 20px !important;
+    }
+  }
+  // === /list ===
+}
+// === /operator-rating ===

@@ -19,14 +19,17 @@
           </v-col>
           <v-col cols="3">
             <app-card padding="19px 12px" background="var(--color-2)">
-              <operatorRating :users="usersTest1" />
+              <operatorRating :users="usersTest1">
+                <template v-slot:title>
+                  Топ операторов по Среднему чеку
+                </template>
+              </operatorRating>
             </app-card>
           </v-col>
           <v-col cols="3">
             <app-card padding="19px 12px" background="var(--color-3)">
               <operatorRating
                 :users="usersTest2"
-                title="Топ операторов по % выкупа"
                 backgroundTabs="brown lighten-3"
                 backgroundAvatar="grey lighten-5"
                 borderListItem="rgba(152, 128, 96, 0.4)"
@@ -34,7 +37,10 @@
                 colorTabActive="#8a7b67"
                 colorAvatarText="brown--text text--lighten-3"
                 ValueRatingColor="purple--text text--accent-3"
-              />
+                ><template v-slot:title>
+                  Топ операторов по % выкупа
+                </template></operatorRating
+              >
             </app-card>
           </v-col>
 
@@ -42,7 +48,6 @@
             <app-card padding="19px 12px" background="var(--color-4)">
               <operatorRating
                 :users="usersTest2"
-                title="Топ операторов по % выкупа"
                 backgroundTabs="brown lighten-3"
                 backgroundAvatar="grey lighten-5"
                 borderListItem="rgba(152, 128, 96, 0.4)"
@@ -50,7 +55,17 @@
                 colorTabActive="#8a7b67"
                 colorAvatarText="brown--text text--lighten-3"
                 ValueRatingColor="purple--text text--accent-3"
-              />
+                ><template v-slot:title>
+                  Топ операторов по % выкупа
+                </template></operatorRating
+              >
+            </app-card>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="6">
+            <app-card padding="20px 25px" background="var(--color-white)">
+              <leadsProcessing />
             </app-card>
           </v-col>
         </v-row>
@@ -60,9 +75,10 @@
 </template>
 
 <script>
+import appCard from "./components/app-pattern/app-card";
 import workingTime from "./components/workingTime";
 import operatorRating from "./components/operatorRating";
-import appCard from "./components/app-pattern/app-card.vue";
+import leadsProcessing from "./components/leadsProcessing";
 
 export default {
   name: "App",
@@ -71,6 +87,7 @@ export default {
     workingTime,
     operatorRating,
     appCard,
+    leadsProcessing,
   },
 
   data: () => ({
