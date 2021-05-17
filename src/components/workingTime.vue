@@ -143,7 +143,8 @@ export default {
                 },
                 value: {
                   color: "#617E8D",
-                  fontSize: "20px",
+                  fontSize: "14px",
+                  offsetY: 0,
                   formatter: function (val) {
                     if (val > 59) {
                       const min = val % 60;
@@ -178,13 +179,16 @@ export default {
                 },
               },
             },
+            dataLabels: {
+              offset: -18,
+              // formatter: function () {},
+            },
           },
         },
 
         dataLabels: {
-          enabled: true,
           style: {
-            fontSize: "10px",
+            fontSize: "6px",
             fontWeight: "bold",
           },
         },
