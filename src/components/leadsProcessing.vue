@@ -8,7 +8,7 @@
       </v-col>
       <v-col cols="8">
         <app-tabs
-          :ObjTitle="tabs"
+          :tabs="tabs"
           class="ml-a"
           background="#E9EFF2"
           colorTabActive="var(--color-6)"
@@ -17,28 +17,32 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col class="diagram"></v-col>
+      <v-col class="diagram">
+        <appDiagramColumn></appDiagramColumn>
+      </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
 import appTabs from "./app-pattern/app-tabs";
+import appDiagramColumn from "./app-pattern/app-diagram-column";
 
 export default {
   name: "leadsProcessing",
   components: {
     appTabs,
+    appDiagramColumn,
   },
   data: function () {
     return {
       title: "Обработка лидов",
-      tabs: {
-        tab1: "05.05.2021 - 08.05.2021",
-        tab2: "Сегодня",
-        tab3: "Неделя",
-        tab4: "Месяц",
-      },
+      tabs: [
+        { title: "05.05.2021 - 08.05.2021" },
+        { title: "Сегодня" },
+        { title: "Неделя" },
+        { title: "Месяц" },
+      ],
     };
   },
 };

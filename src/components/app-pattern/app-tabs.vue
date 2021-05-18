@@ -7,8 +7,8 @@ backgroundTabActive: цвета фона активного элемента
 heightVTabs: высота элемента v-tabs (Number)
 heightVTab: высота элементов v-tab (Number)
 
-ObjTitle: объект с заголовками v-tab (Object)
-  Пример: { tab1: "tab-1", tab2: "tab-2", tab3: "tab-3" }
+tabs: массив с заголовками v-tab (Array)
+  Пример: [{ title: "tab1" }, { title: "tab2" }, { title: "tab3" }]
 
 classVTab: массив с классами для v-tab (Array)
 
@@ -23,7 +23,7 @@ tabActiveChange = метод передаёт индекс активного v-
   backgroundTabActive=""
   heightVTabs=""
   heightVTab=""
-  ObjTitle=""
+  tabs=""
   classVTab=""
   activeClass=""
   @tabChange="tabActiveChange"
@@ -43,13 +43,13 @@ tabActiveChange = метод передаёт индекс активного v-
   >
     <v-tab
       :style="cssProps"
-      v-for="(value, key) in ObjTitle"
+      v-for="(tab, index) in tabs"
       :class="classVTab"
       active-class="tab-active"
       class="text-capitalize flex-shrink-1 rounded-xl ma-1 py-1 px-1 font-weight-regular tab-elem"
-      :key="key"
+      :key="index"
       :height="heightVTab"
-      >{{ value }}</v-tab
+      >{{ tab.title }}</v-tab
     >
   </v-tabs>
 </template>
@@ -82,9 +82,9 @@ export default {
       type: Number,
       default: 5,
     },
-    ObjTitle: {
-      type: Object,
-      default: () => ({ tab1: "tab-1", tab2: "tab-2", tab3: "tab-3" }),
+    tabs: {
+      type: Array,
+      default: () => [{ title: "tab1" }, { title: "tab2" }, { title: "tab3" }],
     },
     classVTab: {
       type: Array,

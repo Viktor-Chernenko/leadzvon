@@ -13,7 +13,7 @@
                 :strokeShow="true"
                 :strokeWidth="4"
                 donutSize="78%"
-                :pieCustomScale="1.65"
+                :pieCustomScale="1.7"
               />
             </app-card>
           </v-col>

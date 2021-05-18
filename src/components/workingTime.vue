@@ -7,7 +7,7 @@
     </h6>
     <appTabs
       :changeMethod="updateSeriesList"
-      :ObjTitle="tabsArr"
+      :tabs="tabs"
       @tabChange="tabActiveChange"
       :classVTab="['text-2', 'color-6']"
       colorTabActive="var(--color-6)"
@@ -53,12 +53,12 @@ export default {
   data() {
     return {
       tabActive: 0,
-      tabsArr: {
-        today: "Сегодня",
-        week: "Неделя",
-        month: "Месяц",
-        selectDate: "Выбрать период",
-      },
+      tabs: [
+        { title: "Сегодня" },
+        { title: "Неделя" },
+        { title: "Месяц" },
+        { title: "Выбрать период" },
+      ],
 
       title: "Время работы",
       workingTimeList: {
@@ -82,7 +82,7 @@ export default {
           "#00BCD4",
           "#8025FE",
           "#85C0D2",
-          "#30D032",
+          "#1CA11E",
           "#FF0668",
           "#F2C94C",
           "#2278CE",
@@ -180,16 +180,28 @@ export default {
               },
             },
             dataLabels: {
-              offset: -18,
-              // formatter: function () {},
+              offset: -20,
+              minAngleToShowLabel: 20,
             },
           },
         },
 
         dataLabels: {
           style: {
-            fontSize: "6px",
+            fontSize: "7px",
             fontWeight: "bold",
+            colors: [
+              "#00BCD4",
+              "#8025FE",
+              "#85C0D2",
+              "#1CA11E",
+              "#FF0668",
+              "#F2C94C",
+              "#2278CE",
+            ],
+          },
+          dropShadow: {
+            enabled: false,
           },
         },
       },

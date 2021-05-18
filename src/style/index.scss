@@ -15,6 +15,10 @@
   --color-13: #BEA98B;
   --color-14: #C08A8A;
   --color-15: #4CAF50;
+  --color-16: #e0e7eb;
+  --color-17: #B5BEC0;
+  --color-18: #EFF3FE;
+
 
 
 
@@ -109,6 +113,22 @@
 .color-14 {
   color: var(--color-14) !important;
 }
+
+.color-15 {
+  color: var(--color-15) !important;
+}
+
+.color-16 {
+  color: var(--color-16) !important;
+}
+
+.color-17 {
+  color: var(--color-17) !important;
+}
+
+.color-18 {
+  color: var(--color-18) !important;
+}
 // == /color ==
 
 // === working-time ===
@@ -122,6 +142,10 @@
     position: absolute !important;
     top: 50% !important;
     transform: none !important;
+  }
+
+  .legend-mouseover-inactive {
+    transition: none !important;
   }
 
   .apexcharts-series {
@@ -193,3 +217,70 @@
   // === /list ===
 }
 // === /operator-rating ===
+
+// === diagram-column ====
+.diagram-column {
+  .apexcharts-legend {
+    overflow: visible !important;
+  }
+
+  .apexcharts-inner {
+    width: 70% !important;
+  }
+
+  .apexcharts-legend-text {
+    font-size: var(--text-1) !important;
+    line-height: 12px;
+    max-width: 75px;
+  }
+
+  .apexcharts-legend-marker {
+    margin-right: 5px;
+    border-radius: 50% !important;
+    width: 14px !important;
+    height: 0 !important;
+
+    &::before {
+      position: absolute;
+      right: 1px;
+      width: 28px;
+      height: 14px;
+      background: var(--color-16);
+      border-radius: 11px;
+      content: '';
+      z-index: -1 !important;
+      opacity: 1 !important;
+    }
+
+    &::after {
+      position: absolute;
+      right: 1px;
+      border-radius: 50% !important;
+      width: 14px !important;
+      height: 14px !important;
+      background: inherit;
+      content: '';
+      z-index: 1 !important;
+      opacity: 1 !important;
+      transform: translateX(-14px) !important;
+    }
+  }
+  
+  .apexcharts-legend-series {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px !important;
+  }
+
+  .apexcharts-inactive-legend {
+    opacity: 1 !important;
+
+    .apexcharts-legend-marker {
+      &::after {
+        transform: translateX(0) !important;
+        background: var(--color-17);
+      }
+    }
+  }
+}
+// === /diagram-column ====

@@ -64,7 +64,7 @@ ValueRatingColor - цвет значения в рейтинга операто�
     </h6>
 
     <appTabs
-      :ObjTitle="tabs"
+      :tabs="tabs"
       :background="backgroundTabs"
       :colorTabActive="colorTabActive"
       class="rounded-xl align-center mb-3 red"
@@ -142,11 +142,11 @@ export default {
     appTabs,
   },
   data: () => ({
-    tabs: {
-      el_1: "Прошлый",
-      el_2: "Текущий месяц",
-      el_3: "Сегодня",
-    },
+    tabs: [
+      { title: "Прошлый" },
+      { title: "Текущий месяц" },
+      { title: "Сегодня" },
+    ],
   }),
 
   props: {

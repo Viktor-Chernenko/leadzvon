@@ -14,7 +14,7 @@ module.exports = {
     "no-plusplus": "off",
     "eol-last": "off",
     "no-tabs": "off",
-    "indent": ["error", 2, { "SwitchCase": 1 }],
+    indent: ["error", 2, { SwitchCase: 1 }],
     "no-alert": "off",
     "prefer-destructuring": "off",
     "no-param-reassign": "off",
