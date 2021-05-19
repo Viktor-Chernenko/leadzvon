@@ -71,12 +71,31 @@ export default {
         formatter: function (val, opt) {
           const arr = opt.w.globals.series;
           const dataPointIndex = opt.dataPointIndex;
+          const seriesIndex = opt.seriesIndex;
 
-          let total = 0;
-          arr.forEach((element) => {
-            total += element[dataPointIndex];
+          let activeItem;
+
+          arr.forEach((item, index) => {
+            let activeElem = item.reduce((acc, element) => {
+              acc += element;
+              return acc;
+            }, 0);
+
+            if (activeElem > 0) {
+              activeItem = index;
+              return true;
+            }
           });
-          return total;
+
+          if (seriesIndex === activeItem) {
+            let total = 0;
+            arr.forEach((element) => {
+              total += element[dataPointIndex];
+            });
+            return total;
+          } else {
+            return "";
+          }
         },
       },
       plotOptions: {
