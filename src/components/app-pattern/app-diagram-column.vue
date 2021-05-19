@@ -62,20 +62,36 @@ export default {
         "#F2C94C",
       ],
       dataLabels: {
-        enabled: false,
+        enabled: true,
+        offsetY: -2000,
+        style: {
+          fontSize: "14px",
+          colors: ["var(--color-6)"],
+        },
+        formatter: function (val, opt) {
+          const arr = opt.w.globals.series;
+          const dataPointIndex = opt.dataPointIndex;
+
+          let total = 0;
+          arr.forEach((element) => {
+            total += element[dataPointIndex];
+          });
+          return total;
+        },
       },
       plotOptions: {
         bar: {
           borderRadius: 0,
           horizontal: false,
           columnWidth: "23px",
+          barHeight: "70%",
           dataLabels: {
             position: "top",
             distributed: true,
+            hideOverflowingLabels: false,
           },
         },
       },
-
       xaxis: {
         type: "category",
         categories: [
@@ -103,6 +119,11 @@ export default {
       },
       fill: {
         opacity: 1,
+      },
+      grid: {
+        padding: {
+          right: 20,
+        },
       },
     },
   }),
