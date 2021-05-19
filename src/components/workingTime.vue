@@ -63,8 +63,8 @@ export default {
       title: "Время работы",
       workingTimeList: {
         value: {
-          active: [100, 160, 110, 113, 133, 110, 162],
-          today: [200, 224, 10, 13, 33, 10, 62],
+          active: [10, 16, 11, 11, 13, 11, 16],
+          today: [20, 22, 10, 13, 33, 10, 62],
           week: [20, 42, 21, 87, 64, 10, 8],
           month: [20, 20, 10, 6, 10, 10, 10],
           period: [40, 20, 10, 6, 10, 10, 10],
@@ -137,50 +137,91 @@ export default {
               labels: {
                 show: true,
                 name: {
-                  show: false,
-                  // color: "#617E8D",
-                  // fontSize: "20 px",
+                  show: true,
+                  offsetY: 0,
+                  color: "#617E8D",
+                  formatter: function (value, bool, w) {
+                    const listTitle = w.globals.seriesNames;
+                    const listSeries = w.globals.series;
+                    let index = [];
+
+                    index = listTitle.reduce(function (acc, elem, index) {
+                      if (elem === value) {
+                        acc.push(index);
+                      }
+                      return acc;
+                    }, []);
+
+                    if (index.length > 0) {
+                      let val = listSeries[index];
+
+                      if (val > 59) {
+                        const min = val % 60;
+                        const hour = Math.floor(val / 60);
+                        return `${hour} ч. ${min} мин. 
+                      `;
+                      }
+
+                      return `${val} мин.`;
+                    } else {
+                      const val = w.globals.seriesTotals.reduce((a, b) => {
+                        return a + b;
+                      }, 0);
+
+                      if (val > 59) {
+                        const min = val % 60;
+                        const hour = Math.floor(val / 60);
+                        return `${hour} ч. ${min} мин. 
+                      `;
+                      }
+
+                      return `${val} мин.`;
+                    }
+                  },
+                  fontSize: "14px",
                 },
                 value: {
                   color: "#617E8D",
-                  fontSize: "14px",
-                  offsetY: 0,
-                  formatter: function (val) {
-                    if (val > 59) {
-                      const min = val % 60;
-                      const hour = Math.floor(val / 60);
-                      if (min) {
-                        return `${hour} ч. ${min} мин.`;
-                      }
-                      return `${hour} ч.`;
-                    }
+                  fontSize: "12px",
+                  offsetY: -1,
+                  formatter: function (val, w) {
+                    const listSeries = w.globals.series;
+                    let index = [];
 
-                    return `${val} мин.`;
+                    index = listSeries.reduce(function (acc, elem, index) {
+                      if (elem == val) {
+                        acc.push(index);
+                      }
+                      return acc;
+                    }, []);
+
+                    const percent = w.globals.seriesPercent[index[0]];
+                    return `${Math.round(percent)}%`;
                   },
                 },
                 total: {
                   showAlways: true,
-                  fontSize: "20px",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  color: "#617E8D",
                   show: true,
-                  label: false,
+                  label: "Total",
                   formatter: function (w) {
-                    const val = w.globals.seriesTotals.reduce((a, b) => {
-                      return a + b;
-                    }, 0);
+                    const percent = w.globals.seriesPercent.reduce(
+                      (acc, item) => {
+                        acc += +item;
+                        return acc;
+                      },
+                      0
+                    );
 
-                    if (val > 59) {
-                      const min = val % 60;
-                      const hour = Math.floor(val / 60);
-                      return `${hour} ч. ${min} мин.`;
-                    }
-
-                    return `${val} мин.`;
+                    return `${Math.round(percent)}%`;
                   },
                 },
               },
             },
             dataLabels: {
-              offset: -20,
+              offset: -17,
               minAngleToShowLabel: 20,
             },
           },
@@ -199,6 +240,10 @@ export default {
               "#F2C94C",
               "#2278CE",
             ],
+          },
+
+          formatter: function (val) {
+            return `${Math.round(val)}%`;
           },
           dropShadow: {
             enabled: false,

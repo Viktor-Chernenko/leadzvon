@@ -18,9 +18,7 @@
   --color-16: #e0e7eb;
   --color-17: #B5BEC0;
   --color-18: #EFF3FE;
-
-
-
+  --color-19: #C9DAE2;
 
   --color-white: #fff;
   --color-black: #000;
@@ -129,6 +127,10 @@
 .color-18 {
   color: var(--color-18) !important;
 }
+
+.color-19 {
+  color: var(--color-19) !important;
+}
 // == /color ==
 
 // === working-time ===
@@ -136,6 +138,18 @@
   // ==charts==
   .apexcharts-svg {
     overflow: visible !important;
+  }
+
+  .apexcharts-inner circle {
+    stroke: var(--color-19);
+    stroke-width: 2px;
+    transform: scale(0.59) translate(53px, 54px) !important;
+    transition: none !important;
+  }
+
+  .apexcharts-datalabels-group {
+    width: 30px !important;
+    overflow: hidden !important;
   }
 
   .apexcharts-datalabels-group {
