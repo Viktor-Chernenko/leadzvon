@@ -1,33 +1,40 @@
 <template>
   <v-app class="app">
     <v-main>
-      <v-container>
-        <v-row class="justify-space-around align-stretch">
-          <v-col cols="3">
+      <v-container :fluid="true" class="wrap">
+        <div class="d-flex align-stretch mb-10">
+          <app-card
+            border="1px dashed #a3b9c4"
+            padding="19px 26px"
+            minWidth="420px"
+            class="mr-10"
+          >
+            <workingTime
+              :strokeShow="true"
+              :strokeWidth="4"
+              donutSize="78%"
+              :pieCustomScale="1.7"
+            />
+          </app-card>
+          <div class="d-flex flex-grow-1">
             <app-card
-              border="1px dashed #a3b9c4"
-              padding="19px 26px"
-              height="100%"
+              class="mr-3"
+              padding="19px 12px"
+              background="var(--color-2)"
+              width="33%"
             >
-              <workingTime
-                :strokeShow="true"
-                :strokeWidth="4"
-                donutSize="78%"
-                :pieCustomScale="1.7"
-              />
-            </app-card>
-          </v-col>
-          <v-col cols="3">
-            <app-card padding="19px 12px" background="var(--color-2)">
               <operatorRating :users="usersTest1">
                 <template v-slot:title>
                   Топ операторов по Среднему чеку
                 </template>
               </operatorRating>
             </app-card>
-          </v-col>
-          <v-col cols="3">
-            <app-card padding="19px 12px" background="var(--color-3)">
+            <app-card
+              class="mr-3"
+              padding="19px 12px"
+              background="var(--color-3)"
+              width="33%"
+            >
               <operatorRating
                 :users="usersTest2"
                 backgroundTabs="brown lighten-3"
@@ -42,10 +49,12 @@
                 </template></operatorRating
               >
             </app-card>
-          </v-col>
-
-          <v-col cols="3">
-            <app-card padding="19px 12px" background="var(--color-4)">
+            <app-card
+              class=""
+              padding="19px 12px"
+              background="var(--color-4)"
+              width="33%"
+            >
               <operatorRating
                 :users="usersTest2"
                 backgroundTabs="brown lighten-3"
@@ -60,8 +69,8 @@
                 </template></operatorRating
               >
             </app-card>
-          </v-col>
-        </v-row>
+          </div>
+        </div>
         <v-row>
           <v-col cols="6">
             <app-card padding="20px 25px" background="var(--color-white)">
@@ -175,7 +184,14 @@ body,
   background: #e5ecf0;
 }
 
-.app {
-  padding: 40px;
+#app {
+  max-width: 100%;
+}
+
+.wrap {
+  max-width: 1670px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
 }
 </style>
